@@ -38,7 +38,9 @@ module YahooFinance
     end
 
     def get_current_quote
-      current_map(yahoo_quote)
+      current_map
+    rescue
+      nil
     end
 
     def yahoo_quote
@@ -53,13 +55,13 @@ module YahooFinance
       CURRENT_FORMAT.keys.join
     end
 
-    def current_values(quote)
+    def current_values
       CSV.parse(yahoo_quote)[0]
     end
 
-    def current_map(quote)
+    def current_map
       map = {}
-      values = current_values(quote)
+      values = current_values
       CURRENT_FORMAT.each_with_index do |v,i|
         if v[1].is_a?(Array)
           map[v[1][0]] = values[i].send(v[1][1])
@@ -87,16 +89,18 @@ module YahooFinance
 
     def initialize(symbol, date)
       self.symbol= symbol
-      self.start_date= Date.parse(date)
-      self.end_date= Date.parse(date)
+      self.start_date= date
+      self.end_date= date
       self.results= get_past_quote
     end
 
     def get_past_quote
-      past_map(yahoo_quote)
+      past_map
+    rescue
+      nil
     end
 
-    def yahoo_quote
+    def yahoo_past_quote
       open(yahoo_past_url).read
     end
 
@@ -112,13 +116,13 @@ module YahooFinance
     end
 
 
-    def past_values(quote)
-      CSV.parse(yahoo_quote)[1]
+    def past_values
+      CSV.parse(yahoo_past_quote)[1]
     end
 
-    def past_map(quote)
+    def past_map
       map = {}
-      values = past_values(quote)
+      values = past_values
       PAST_FORMAT.each_with_index do |v,i|
         if v.is_a?(Array)
           map[v[0]] = values[i].send(v[1])

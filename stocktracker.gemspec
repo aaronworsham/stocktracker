@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Aaron Worsham"]
   s.email       = ["aaronworsham@gmail.com"]
   s.homepage    = "https://github.com/aaronworsham/stocktracker"
-  s.summary     = %q{Returns Yahoo Finance Quotes for stock symbols}
-  s.description = %q{Returns Yahoo Finance Quotes for stock symbols}
+  s.summary     = %q{Returns Yahoo Finance Quotes for stock symbols.}
+  s.description = %q{Queries Yahoo Finance for Quotes from current and past.  Uses Redis to cache results for period of time}
 
   s.rubyforge_project = "stocktracker"
 
@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
+  s.add_runtime_dependency 'redis'
 end
