@@ -4,6 +4,7 @@ require 'csv'
 
 # modified version of YahooFinance gem by Nicholas Rahn <nick at transparentech.com>
 
+#http://download.finance.yahoo.com/d/quotes.csv?s=%5EGDAXI&f=sl1d1t1c1ohgv&e=.csv
 module YahooFinance
 
   class CurrentQuote
@@ -48,7 +49,7 @@ module YahooFinance
     end
 
     def yahoo_current_url
-      "http://download.finance.yahoo.com/d/quotes.csv?s=#{self.symbol}&f=#{current_format}"
+      URI.encode "http://download.finance.yahoo.com/d/quotes.csv?s=#{self.symbol}&f=#{current_format}"
     end
 
     def current_format
@@ -105,14 +106,16 @@ module YahooFinance
     end
 
     def yahoo_past_url
-      "http://itable.finance.yahoo.com/table.csv?"+
-      "s=#{symbol}&g=d&"+
-      "a=#{start_date.month-1}&"+
-      "b=#{start_date.mday}&"+
-      "c=#{start_date.year}&"+
-      "d=#{end_date.month-1}&"+
-      "e=#{end_date.mday}&"+
-      "f=#{end_date.year}"
+      URI.encode(
+        "http://itable.finance.yahoo.com/table.csv?"+
+        "s=#{symbol}&g=d&"+
+        "a=#{start_date.month-1}&"+
+        "b=#{start_date.mday}&"+
+        "c=#{start_date.year}&"+
+        "d=#{end_date.month-1}&"+
+        "e=#{end_date.mday}&"+
+        "f=#{end_date.year}"
+      )
     end
 
 
