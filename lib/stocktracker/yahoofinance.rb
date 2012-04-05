@@ -38,16 +38,16 @@ module YahooFinance
       self.results= get_current_quote
     end
 
-    def get_current_quote(attempt = 3)
-      if attempt > 0
+    def get_current_quote(attempt = 1)
+      if attempt <= 3
         puts "Attempt #{attempt} to pull quote for #{self.symbol}"
-        current_map || get_current_quote(attempt - 1)
+        current_map || get_current_quote(attempt + 1)
       else
         raise 'Failed to get current quote within 3 attempts'
       end
     rescue Errno::ECONNRESET => e
       puts "Connection Error #{e.message}"
-      get_current_quote(attempt - 1)
+      get_current_quote(attempt + 1)
     rescue => e
       puts e.message
       nil
